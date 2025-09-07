@@ -64,7 +64,7 @@ function App() {
             )
           }
         />
-        {/* <Route
+        <Route
           path="/notifications"
           element={
             isAuthenticated && isOnboarded ? (
@@ -75,7 +75,7 @@ function App() {
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )
           }
-        /> */}
+        />
         {/* 
       
         <Route
