@@ -18,11 +18,13 @@ import toast from "react-hot-toast";
 
 import ChatLoader from "../components/ChatLoader";
 import CallButton from "../components/CallButton";
+import { useThemeStore } from "../store/useThemeStore";
 
 const STREAM_API_KEY = import.meta.env.VITE_STREAM_API_KEY;
 
 const ChatPage = () => {
   const { id: targetUserId } = useParams();
+  const { theme } = useThemeStore();
 
   const [chatClient, setChatClient] = useState(null);
   const [channel, setChannel] = useState(null);
@@ -96,7 +98,12 @@ const ChatPage = () => {
 
   return (
     <div className="h-[93vh]">
-      <Chat client={chatClient}>
+      <Chat
+        client={chatClient}
+        theme={
+          theme === "dark" ? "str-chat__theme-dark" : "str-chat__theme-light"
+        }
+      >
         <Channel channel={channel}>
           <div className="w-full relative">
             <CallButton handleVideoCall={handleVideoCall} />
