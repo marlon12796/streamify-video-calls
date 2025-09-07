@@ -7,6 +7,8 @@ import PageLoader from "./components/PageLoader";
 import LoginPage from "./pages/LoginPage";
 import OnboardingPage from "./pages/OnboardingPage";
 import { useThemeStore } from "./store/useThemeStore";
+import Layout from "./components/Layout";
+import { HomePage } from "./pages/HomePage";
 function App() {
   const { isLoading, authUser } = useAuthUser();
   const { theme } = useThemeStore();
