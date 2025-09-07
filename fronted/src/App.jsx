@@ -9,6 +9,9 @@ import OnboardingPage from "./pages/OnboardingPage";
 import { useThemeStore } from "./store/useThemeStore";
 import Layout from "./components/Layout";
 import { HomePage } from "./pages/HomePage";
+import { NotificationsPage } from "./pages/NotificationsPage";
+import ChatPage from "./pages/ChatPage";
+import CallPage from "./pages/CallPage";
 function App() {
   const { isLoading, authUser } = useAuthUser();
   const { theme } = useThemeStore();
@@ -76,18 +79,6 @@ function App() {
             )
           }
         />
-        {/* 
-      
-        <Route
-          path="/call/:id"
-          element={
-            isAuthenticated && isOnboarded ? (
-              <CallPage />
-            ) : (
-              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
-            )
-          }
-        />
         <Route
           path="/chat/:id"
           element={
@@ -100,7 +91,16 @@ function App() {
             )
           }
         />
-     */}
+        <Route
+          path="/call/:id"
+          element={
+            isAuthenticated && isOnboarded ? (
+              <CallPage />
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
       </Routes>
       <Toaster />
     </div>
