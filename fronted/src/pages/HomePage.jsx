@@ -59,11 +59,11 @@ const HomePage = () => {
       <div className="container mx-auto space-y-10">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Your Friends
+            Tus Amigos
           </h2>
           <Link to="/notifications" className="btn btn-outline btn-sm">
             <UsersIcon className="mr-2 size-4" />
-            Friend Requests
+            Solicitudes de amistad
           </Link>
         </div>
 
@@ -86,11 +86,11 @@ const HomePage = () => {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-                  Meet New Learners
+                  Conoce Nuevos Estudiantes
                 </h2>
                 <p className="opacity-70">
-                  Discover perfect language exchange partners based on your
-                  profile
+                  Descubre compañeros de intercambio de idiomas ideales según tu
+                  perfil
                 </p>
               </div>
             </div>
@@ -103,10 +103,10 @@ const HomePage = () => {
           ) : recommendedUsers.length === 0 ? (
             <div className="card bg-base-200 p-6 text-center">
               <h3 className="font-semibold text-lg mb-2">
-                No recommendations available
+                No hay recomendaciones disponibles
               </h3>
               <p className="text-base-content opacity-70">
-                Check back later for new language partners!
+                ¡Vuelve más tarde para descubrir nuevos compañeros de idioma!
               </p>
             </div>
           ) : (
@@ -138,15 +138,15 @@ const HomePage = () => {
                         </div>
                       </div>
 
-                      {/* Languages with flags */}
+                      {/* Idiomas con banderas */}
                       <div className="flex flex-wrap gap-1.5">
                         <span className="badge badge-secondary">
                           {getLanguageFlag(user.nativeLanguage)}
-                          Native: {capitialize(user.nativeLanguage)}
+                          Nativo: {capitialize(user.nativeLanguage)}
                         </span>
                         <span className="badge badge-outline">
                           {getLanguageFlag(user.learningLanguage)}
-                          Learning: {capitialize(user.learningLanguage)}
+                          Aprende: {capitialize(user.learningLanguage)}
                         </span>
                       </div>
 
@@ -154,7 +154,7 @@ const HomePage = () => {
                         <p className="text-sm opacity-70">{user.bio}</p>
                       )}
 
-                      {/* Action button */}
+                      {/* Botón de acción */}
                       <button
                         className={`btn w-full mt-2 ${
                           hasRequestBeenSent ? "btn-disabled" : "btn-primary"
@@ -165,12 +165,12 @@ const HomePage = () => {
                         {hasRequestBeenSent ? (
                           <>
                             <CheckCircleIcon className="size-4 mr-2" />
-                            Request Sent
+                            Solicitud enviada
                           </>
                         ) : (
                           <>
                             <UserPlusIcon className="size-4 mr-2" />
-                            Send Friend Request
+                            Enviar solicitud de amistad
                           </>
                         )}
                       </button>
@@ -186,4 +186,4 @@ const HomePage = () => {
   );
 };
 
-export { HomePage };
+export default HomePage;

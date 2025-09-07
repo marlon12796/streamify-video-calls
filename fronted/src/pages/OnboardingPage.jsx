@@ -55,18 +55,18 @@ const OnboardingPage = () => {
       <div className="card bg-base-200 w-full max-w-3xl shadow-xl">
         <div className="card-body p-6 sm:p-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6">
-            Complete Your Profile
+            Completa tu perfil
           </h1>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* PROFILE PIC CONTAINER */}
+            {/* CONTENEDOR FOTO DE PERFIL */}
             <div className="flex flex-col items-center justify-center space-y-4">
-              {/* IMAGE PREVIEW */}
+              {/* PREVISUALIZACIÓN DE IMAGEN */}
               <div className="size-32 rounded-full bg-base-300 overflow-hidden">
                 {formState.profilePic ? (
                   <img
                     src={formState.profilePic}
-                    alt="Profile Preview"
+                    alt="Vista previa del perfil"
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -76,7 +76,7 @@ const OnboardingPage = () => {
                 )}
               </div>
 
-              {/* Generate Random Avatar BTN */}
+              {/* BOTÓN GENERAR AVATAR ALEATORIO */}
               <div className="flex items-center gap-2">
                 <button
                   type="button"
@@ -84,15 +84,15 @@ const OnboardingPage = () => {
                   className="btn btn-accent"
                 >
                   <ShuffleIcon className="size-4 mr-2" />
-                  Generate Random Avatar
+                  Generar avatar aleatorio
                 </button>
               </div>
             </div>
 
-            {/* FULL NAME */}
+            {/* NOMBRE COMPLETO */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Full Name</span>
+                <span className="label-text">Nombre completo</span>
               </label>
               <input
                 type="text"
@@ -102,14 +102,14 @@ const OnboardingPage = () => {
                   setFormState({ ...formState, fullName: e.target.value })
                 }
                 className="input input-bordered w-full"
-                placeholder="Your full name"
+                placeholder="Tu nombre completo"
               />
             </div>
 
             {/* BIO */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Bio</span>
+                <span className="label-text">Biografía</span>
               </label>
               <textarea
                 name="bio"
@@ -118,16 +118,16 @@ const OnboardingPage = () => {
                   setFormState({ ...formState, bio: e.target.value })
                 }
                 className="textarea textarea-bordered h-24 block w-full"
-                placeholder="Tell others about yourself and your language learning goals"
+                placeholder="Cuéntales a otros sobre ti y tus metas de aprendizaje de idiomas"
               />
             </div>
 
-            {/* LANGUAGES */}
+            {/* IDIOMAS */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* NATIVE LANGUAGE */}
+              {/* IDIOMA NATIVO */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Native Language</span>
+                  <span className="label-text">Idioma nativo</span>
                 </label>
                 <select
                   name="nativeLanguage"
@@ -140,7 +140,7 @@ const OnboardingPage = () => {
                   }
                   className="select select-bordered w-full"
                 >
-                  <option value="">Select your native language</option>
+                  <option value="">Selecciona tu idioma nativo</option>
                   {LANGUAGES.map((lang) => (
                     <option key={`native-${lang}`} value={lang.toLowerCase()}>
                       {lang}
@@ -149,10 +149,12 @@ const OnboardingPage = () => {
                 </select>
               </div>
 
-              {/* LEARNING LANGUAGE */}
+              {/* IDIOMA EN APRENDIZAJE */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Learning Language</span>
+                  <span className="label-text">
+                    Idioma que estás aprendiendo
+                  </span>
                 </label>
                 <select
                   name="learningLanguage"
@@ -165,7 +167,9 @@ const OnboardingPage = () => {
                   }
                   className="select select-bordered w-full"
                 >
-                  <option value="">Select language you're learning</option>
+                  <option value="">
+                    Selecciona el idioma que estás aprendiendo
+                  </option>
                   {LANGUAGES.map((lang) => (
                     <option key={`learning-${lang}`} value={lang.toLowerCase()}>
                       {lang}
@@ -175,10 +179,10 @@ const OnboardingPage = () => {
               </div>
             </div>
 
-            {/* LOCATION */}
+            {/* UBICACIÓN */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Location</span>
+                <span className="label-text">Ubicación</span>
               </label>
               <div className="relative">
                 <MapPinIcon className="absolute top-1/2 transform -translate-y-1/2 left-3 size-5 text-base-content opacity-70" />
@@ -190,13 +194,12 @@ const OnboardingPage = () => {
                     setFormState({ ...formState, location: e.target.value })
                   }
                   className="input input-bordered w-full pl-10"
-                  placeholder="City, Country"
+                  placeholder="Ciudad, País"
                 />
               </div>
             </div>
 
-            {/* SUBMIT BUTTON */}
-
+            {/* BOTÓN ENVIAR */}
             <button
               className="btn btn-primary w-full"
               disabled={isPending}
@@ -205,12 +208,12 @@ const OnboardingPage = () => {
               {!isPending ? (
                 <>
                   <ShipWheelIcon className="size-5 mr-2" />
-                  Complete Onboarding
+                  Completar registro
                 </>
               ) : (
                 <>
                   <LoaderIcon className="animate-spin size-5 mr-2" />
-                  Onboarding...
+                  Registrando...
                 </>
               )}
             </button>

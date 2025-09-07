@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "description": "Monorepo para la app HablaYa con fronted y backend",
+  "scripts": {
+    "install:all": "pnpm install --filter frontend install && pnpm install --filter backend install ",
+    "dev:all": "pnpm  --filter frontend dev && pnpm --filter backend dev",
+    "build:frontend": "pnpm --filter frontend build",
+    "build":"pnpm install:all && pnpm build:frontend",
+    "start":"pnpm --filter  backend start"
+  },
+  "packageManager": "pnpm@10.12.2"
+}

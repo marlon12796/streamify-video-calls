@@ -1,19 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { useParams } from "react-router";
 import useAuthUser from "../hooks/useAuthUser";
 import { useQuery } from "@tanstack/react-query";
 import { getStreamToken } from "../lib/api";
-
-import {
-  Channel,
-  ChannelHeader,
-  Chat,
-  MessageInput,
-  MessageList,
-  Thread,
-  Window,
-} from "stream-chat-react";
-import { StreamChat } from "stream-chat";
 import toast from "react-hot-toast";
 
 import ChatLoader from "../components/ChatLoader";
@@ -21,6 +10,28 @@ import CallButton from "../components/CallButton";
 import { useThemeStore } from "../store/useThemeStore";
 
 const STREAM_API_KEY = import.meta.env.VITE_STREAM_API_KEY;
+
+// Lazy load de los componentes de stream-chat-react
+const Chat = lazy(() =>
+  import("stream-chat-react").then((mod) => ({ default: mod.Chat }))
+);
+const Channel = lazy(() =>
+  import("stream-chat-react").then((mod) => ({ default: mod.Channel }))
+);
+const ChannelHeader = lazy(() =>
+  import("stream-chat-react").then((mod) => ({ default: mod.ChannelHeader }))
+);
+const MessageInput = lazy(() =>
+  import("stream-chat-react").then((mod) => ({ default: mod.MessageInput }))
+);
+const MessageList = lazy(() =>
+  import("stream-chat-react").then((mod) => ({ default: mod.MessageList }))
+);
+const Thread = lazy(() =>
+  import("stream-chat-react").then((mod) => ({ default: mod.Thread }))
+);
+
+import { StreamChat } from "stream-chat";
 
 const ChatPage = () => {
   const { id: targetUserId } = useParams();
@@ -35,7 +46,7 @@ const ChatPage = () => {
   const { data: tokenData } = useQuery({
     queryKey: ["streamToken"],
     queryFn: getStreamToken,
-    enabled: !!authUser, // this will run only when authUser is available
+    enabled: !!authUser,
   });
 
   useEffect(() => {
@@ -43,8 +54,6 @@ const ChatPage = () => {
       if (!tokenData?.token || !authUser) return;
 
       try {
-        console.log("Initializing stream chat client...");
-
         const client = StreamChat.getInstance(STREAM_API_KEY);
 
         await client.connectUser(
@@ -56,13 +65,7 @@ const ChatPage = () => {
           tokenData.token
         );
 
-        //
         const channelId = [authUser._id, targetUserId].sort().join("-");
-
-        // you and me
-        // if i start the chat => channelId: [myId, yourId]
-        // if you start the chat => channelId: [yourId, myId]  => [myId,yourId]
-
         const currChannel = client.channel("messaging", channelId, {
           members: [authUser._id, targetUserId],
         });
@@ -98,25 +101,30 @@ const ChatPage = () => {
 
   return (
     <div className="h-[93vh]">
-      <Chat
-        client={chatClient}
-        theme={
-          theme === "dark" ? "str-chat__theme-dark" : "str-chat__theme-light"
-        }
-      >
-        <Channel channel={channel}>
-          <div className="w-full relative">
-            <CallButton handleVideoCall={handleVideoCall} />
-            <Window>
-              <ChannelHeader />
-              <MessageList />
-              <MessageInput focus />
-            </Window>
-          </div>
-          <Thread />
-        </Channel>
-      </Chat>
+      <Suspense fallback={<ChatLoader />}>
+        <Chat
+          client={chatClient}
+          theme={
+            theme === "dark" ? "str-chat__theme-dark" : "str-chat__theme-light"
+          }
+        >
+          <Channel channel={channel}>
+            <div className="w-full relative">
+              <CallButton handleVideoCall={handleVideoCall} />
+              <Suspense fallback={<ChatLoader />}>
+                <ChannelHeader />
+                <MessageList />
+                <MessageInput focus />
+              </Suspense>
+            </div>
+            <Suspense fallback={<ChatLoader />}>
+              <Thread />
+            </Suspense>
+          </Channel>
+        </Chat>
+      </Suspense>
     </div>
   );
 };
+
 export default ChatPage;

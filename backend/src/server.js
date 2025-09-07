@@ -17,7 +17,7 @@ const __dirname = path.resolve();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173","http://localhost:4173"],
     credentials: true, 
   })
 );
@@ -29,13 +29,15 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
 
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "../frontend/dist")));
+if (process.env.NODE_ENV === "production") {
+  // Carpeta corregida
+  app.use(express.static(path.join(__dirname, "../fronted/dist")));
 
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-//   });
-// }
+  app.all("/{*any}", (req, res) => {
+    res.sendFile(path.join(__dirname, "../fronted/dist/index.html"));
+  });
+}
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

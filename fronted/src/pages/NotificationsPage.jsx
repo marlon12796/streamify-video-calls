@@ -31,7 +31,7 @@ const NotificationsPage = () => {
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="container mx-auto max-w-4xl space-y-8">
         <h1 className="text-2xl sm:text-3xl lg:text-center font-bold tracking-tight mb-6">
-          Notifications
+          Notificaciones
         </h1>
 
         {isLoading ? (
@@ -44,7 +44,7 @@ const NotificationsPage = () => {
               <section className="space-y-4">
                 <h2 className="text-xl font-semibold flex items-center gap-2">
                   <UserCheckIcon className="h-5 w-5 text-primary" />
-                  Friend Requests
+                  Solicitudes de amistad
                   <span className="badge badge-primary ml-2">
                     {incomingRequests.length}
                   </span>
@@ -71,10 +71,10 @@ const NotificationsPage = () => {
                               </h3>
                               <div className="flex flex-wrap gap-1.5 mt-1">
                                 <span className="badge badge-secondary badge-sm">
-                                  Native: {request.sender.nativeLanguage}
+                                  Nativo: {request.sender.nativeLanguage}
                                 </span>
                                 <span className="badge badge-outline badge-sm">
-                                  Learning: {request.sender.learningLanguage}
+                                  Aprendiendo: {request.sender.learningLanguage}
                                 </span>
                               </div>
                             </div>
@@ -85,7 +85,7 @@ const NotificationsPage = () => {
                             onClick={() => acceptRequestMutation(request._id)}
                             disabled={isPending}
                           >
-                            Accept
+                            Aceptar
                           </button>
                         </div>
                       </div>
@@ -95,12 +95,12 @@ const NotificationsPage = () => {
               </section>
             )}
 
-            {/* ACCEPTED REQS NOTIFICATONS */}
+            {/* NOTIFICACIONES DE SOLICITUDES ACEPTADAS */}
             {acceptedRequests.length > 0 && (
               <section className="space-y-4">
                 <h2 className="text-xl font-semibold flex items-center gap-2">
                   <BellIcon className="h-5 w-5 text-success" />
-                  New Connections
+                  Nuevas conexiones
                 </h2>
 
                 <div className="space-y-3">
@@ -122,17 +122,17 @@ const NotificationsPage = () => {
                               {notification.recipient.fullName}
                             </h3>
                             <p className="text-sm my-1">
-                              {notification.recipient.fullName} accepted your
-                              friend request
+                              {notification.recipient.fullName} aceptó tu
+                              solicitud de amistad
                             </p>
                             <p className="text-xs flex items-center opacity-70">
                               <ClockIcon className="h-3 w-3 mr-1" />
-                              Recently
+                              Recientemente
                             </p>
                           </div>
                           <div className="badge badge-success">
                             <MessageSquareIcon className="h-3 w-3 mr-1" />
-                            New Friend
+                            Nuevo amigo
                           </div>
                         </div>
                       </div>
@@ -151,4 +151,4 @@ const NotificationsPage = () => {
     </div>
   );
 };
-export { NotificationsPage };
+export default NotificationsPage;
