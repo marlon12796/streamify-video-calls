@@ -5,13 +5,16 @@ import { Toaster } from "react-hot-toast";
 
 import PageLoader from "./components/PageLoader";
 import LoginPage from "./pages/LoginPage";
+import OnboardingPage from "./pages/OnboardingPage";
+import { useThemeStore } from "./store/useThemeStore";
 function App() {
   const { isLoading, authUser } = useAuthUser();
+  const { theme } = useThemeStore();
   const isAuthenticated = Boolean(authUser);
   const isOnboarded = authUser?.isOnboarded;
   if (isLoading) return <PageLoader />;
   return (
-    <div className="h-screen">
+    <div className="h-screen" data-theme={theme}>
       <Routes>
         <Route
           path="/"
@@ -42,6 +45,20 @@ function App() {
               <LoginPage />
             ) : (
               <Navigate to={isOnboarded ? "/" : "/onboarding"} />
+            )
+          }
+        />
+        <Route
+          path="/onboarding"
+          element={
+            isAuthenticated ? (
+              !isOnboarded ? (
+                <OnboardingPage />
+              ) : (
+                <Navigate to="/" />
+              )
+            ) : (
+              <Navigate to="/login" />
             )
           }
         />
@@ -80,20 +97,7 @@ function App() {
             )
           }
         />
-        <Route
-          path="/onboarding"
-          element={
-            isAuthenticated ? (
-              !isOnboarded ? (
-                <OnboardingPage />
-              ) : (
-                <Navigate to="/" />
-              )
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        /> */}
+     */}
       </Routes>
       <Toaster />
     </div>
