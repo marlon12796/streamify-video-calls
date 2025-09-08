@@ -16,6 +16,10 @@ COPY backend/package.json backend/pnpm-lock.yaml ./backend/
 RUN pnpm install:all
 
 COPY . .
+# Definir variables VITE para build
+ARG VITE_STREAM_API_KEY
+ENV VITE_STREAM_API_KEY=$VITE_STREAM_API_KEY
+
 RUN pnpm build:frontend
 
 # -----------------------------
