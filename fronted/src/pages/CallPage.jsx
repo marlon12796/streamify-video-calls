@@ -4,17 +4,26 @@ import useAuthUser from "../hooks/useAuthUser";
 import { useQuery } from "@tanstack/react-query";
 import { getStreamToken } from "../lib/api";
 
-import {
-  StreamVideo,
-  StreamVideoClient,
-  StreamCall,
-} from "@stream-io/video-react-sdk";
-
 import "@stream-io/video-react-sdk/dist/css/styles.css";
 import toast from "react-hot-toast";
 import PageLoader from "../components/PageLoader";
-import { CallContent } from "../components/CallContent";
-
+import { lazy, Suspense } from "react";
+// Lazy load de los componentes de stream-chat-react
+const StreamVideo = lazy(() =>
+  import("@stream-io/video-react-sdk").then((mod) => ({
+    default: mod.StreamVideo,
+  }))
+);
+const CallContent = lazy(() =>
+  import("../components/CallContent").then((mod) => ({
+    default: mod.CallContent,
+  }))
+);
+const StreamCall = lazy(() =>
+  import("@stream-io/video-react-sdk").then((mod) => ({
+    default: mod.StreamCall,
+  }))
+);
 const STREAM_API_KEY = import.meta.env.VITE_STREAM_API_KEY;
 
 const CallPage = () => {
@@ -34,6 +43,8 @@ const CallPage = () => {
   useEffect(() => {
     const initCall = async () => {
       if (!tokenData.token || !authUser || !callId) return;
+      const StreamVideoClient = (await import("@stream-io/video-react-sdk"))
+        .StreamVideoClient;
 
       try {
         console.log("Initializing Stream video client...");
@@ -75,11 +86,13 @@ const CallPage = () => {
     <div className="h-screen flex flex-col items-center justify-center">
       <div className="relative">
         {client && call ? (
-          <StreamVideo client={client}>
-            <StreamCall call={call}>
-              <CallContent />
-            </StreamCall>
-          </StreamVideo>
+          <Suspense fallback={<ChatLoader />}>
+            <StreamVideo client={client}>
+              <StreamCall call={call}>
+                <CallContent />
+              </StreamCall>
+            </StreamVideo>
+          </Suspense>
         ) : (
           <div className="flex items-center justify-center h-full">
             <p>

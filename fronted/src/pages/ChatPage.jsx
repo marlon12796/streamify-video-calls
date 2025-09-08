@@ -31,8 +31,6 @@ const Thread = lazy(() =>
   import("stream-chat-react").then((mod) => ({ default: mod.Thread }))
 );
 
-import { StreamChat } from "stream-chat";
-
 const ChatPage = () => {
   const { id: targetUserId } = useParams();
   const { theme } = useThemeStore();
@@ -52,6 +50,7 @@ const ChatPage = () => {
   useEffect(() => {
     const initChat = async () => {
       if (!tokenData?.token || !authUser) return;
+      const { StreamChat } = await import("stream-chat");
 
       try {
         const client = StreamChat.getInstance(STREAM_API_KEY);
@@ -98,6 +97,7 @@ const ChatPage = () => {
   };
 
   if (loading || !chatClient || !channel) return <ChatLoader />;
+  const themesDark = ["dark", "forest"];
 
   return (
     <div className="h-[93vh]">
@@ -105,21 +105,19 @@ const ChatPage = () => {
         <Chat
           client={chatClient}
           theme={
-            theme === "dark" ? "str-chat__theme-dark" : "str-chat__theme-light"
+            themesDark.includes(theme)
+              ? "str-chat__theme-dark"
+              : "str-chat__theme-light"
           }
         >
           <Channel channel={channel}>
-            <div className="w-full relative">
+            <div className="w-full relative flex flex-col">
               <CallButton handleVideoCall={handleVideoCall} />
-              <Suspense fallback={<ChatLoader />}>
-                <ChannelHeader />
-                <MessageList />
-                <MessageInput focus />
-              </Suspense>
+              <ChannelHeader />
+              <MessageList />
+              <MessageInput focus />
             </div>
-            <Suspense fallback={<ChatLoader />}>
-              <Thread />
-            </Suspense>
+            <Thread />
           </Channel>
         </Chat>
       </Suspense>

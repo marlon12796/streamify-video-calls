@@ -2,32 +2,37 @@
 @plugin "daisyui" {
   themes: all;
 }
+/* .str-chat{
+  --str-chat__spacing-2
+} */
 
-
-
+/* 
 /* Overrides personalizados */
 .str-chat__channel {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom, #c9e8c9, #b7e7bb);
   height: 100%;
 }
 
 .str-chat__container {
   max-width: 1200px;
   width: 100%;
-  height: 80% !important;
-  margin: 0 auto !important;
+  max-block-size: 70svh;
+  margin-block: auto;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(73, 69, 69, 0.15);
+  /* overflow: hidden;   */
 }
-
 .str-chat__list {
   background-color: #ffffff;
   padding: 12px;
 }
+/* .str-chat__channel-header{
+ padding-block: 1.5em;
+
+} */
+/* 
 
 .str-chat__list-notifications {
   display: none;
@@ -35,4 +40,4 @@
 
 .str-chat__message-input {
   border-top: 1px solid #ddd;
-}
+}  */
