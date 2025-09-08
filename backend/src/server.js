@@ -30,11 +30,11 @@ app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
 
 if (process.env.NODE_ENV === "production") {
-  // Carpeta corregida
-  app.use(express.static(path.join(__dirname, "../fronted/dist")));
+  const frontendPath = path.join(__dirname, "frontend/dist");
 
-  app.all("/{*any}", (req, res) => {
-    res.sendFile(path.join(__dirname, "../fronted/dist/index.html"));
+  app.use(express.static(frontendPath));
+  app.get("/{*any}", (req, res) => {
+    res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
 
