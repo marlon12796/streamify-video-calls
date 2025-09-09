@@ -8,6 +8,7 @@ import "@stream-io/video-react-sdk/dist/css/styles.css";
 import toast from "react-hot-toast";
 import PageLoader from "../components/PageLoader";
 import { lazy, Suspense } from "react";
+import ChatLoader from "../components/ChatLoader";
 // Lazy load de los componentes de stream-chat-react
 const StreamVideo = lazy(() =>
   import("@stream-io/video-react-sdk").then((mod) => ({
